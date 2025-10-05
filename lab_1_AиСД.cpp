@@ -95,4 +95,32 @@ public:
      else
          return a==b;
  }
+  T operator[](int index) {
+     if (index >= _size) throw out_of_range("Out of range");
+     return plenty[index];
+ }
+Class intersection(Class<T> other) {// Метод для определения пересечения
+    int result_size = 0;
+    for (int i = 0; i < other._size; i++) {
+        if (contains(plenty, _size, other.plenty[i])) {
+            result_size++;
+        }
+    }
+    Class result;
+    result._size = result_size;
+    result.plenty = new T[result_size];
+    for (int i = 0; i < result_size; i++) {
+        result.plenty[i] = T();
+    }
+    int j = 0;
+    for (int i = 0; i < other._size; i++) {
+        if (contains(plenty, _size, other.plenty[i])) {
+            if (j < result_size) {
+                result.plenty[j++] = other.plenty[i];
+            }
+        }
+    }
+    return result;
+}
 };
+
