@@ -122,5 +122,14 @@ Class intersection(Class<T> other) {// Метод для определения 
     }
     return result;
 }
+ bool operator==(Class<T> other) {
+     if (_size != other._size) return false;
+     for (int i = 0; i < _size; i++) {
+         if (!other.contains(other.plenty, other._size, plenty[i])) return false;
+     }
+     return true;
+ }
+ bool operator!=(Class<T> other) { return  !(*this == other); }
 };
+
 
