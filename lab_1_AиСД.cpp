@@ -69,4 +69,30 @@ public:
     ~Class() {
         delete[] plenty;
     }
+     bool contains(T* data, size_t size, T value) {//Метод для проверки наличия числа
+     for (int i = 0; i < size; i++) {
+         if (equal(data[i],value)) {
+             return true;
+         }
+     }
+     return false;
+ }
+ bool containsElement(T number) {//Метод для проверки наличия числа
+     if (contains(plenty,_size ,number)) {
+         return true;
+     }
+     else
+         return false;
+ }
+  bool equal(T a, T b) {//Проверка на равенство
+     if constexpr (is_floating_point_v<T>) {
+         if (fabs(a - b) < e) {
+             return true;
+         }
+         else
+             return false;
+     }
+     else
+         return a==b;
+ }
 };
