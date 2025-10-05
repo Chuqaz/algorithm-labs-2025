@@ -6,6 +6,11 @@
 
 using namespace std;
 
+template<typename A, typename B>
+ostream& operator<<(std::ostream& os, const std::pair<A, B>& p) {
+    os << "(" << p.first << ", " << p.second << ")";
+    return os;
+}
 
 template<typename T>
 class Class {
@@ -231,8 +236,49 @@ void operator-=(T number) {
     plenty = new_plenty;
     _size--;
 }
-
+friend ostream& operator<< <>(std::ostream& os, const Class<T> other);
 };
 
+template<typename T>
+ostream& operator<<(std::ostream& os, const Class<T> other) {
+    for (int i = 0; i < other._size; i++) {
+        os << other.plenty[i];
+        if (i < other._size - 1) {
+            os << ", ";
+        }
+    }
+    os << '\n';
+    return os;
+}
+int main()
+{
+    float arr2[] = { 3.1,1.5,4.4,-5,6,-7.1 };
 
+    Class<float> a(1,10,6);
+    Class<float> b(arr2, 6);
+
+    cout << "Set A: ";
+    cout<<a;
+    cout << "Set B: ";
+    cout << b;
+    Class<float> d=a+b;
+    cout << "Set D: ";
+    cout << d;
+    Class<float> e = a - b;
+    cout << "Set E: ";
+    cout << e;
+    Class<float> e_1 = b - 3.4;
+    cout << "Set E_1: ";
+    cout << e_1;
+    e_1 -= 4.6;
+    cout << e_1;
+    e_1 += 7.1;
+    cout << e_1;
+    Class<float> e_2 = a + 10;
+    cout << "Set E_2: ";
+    cout << e_2;
+    Class<float> e_3 = a.intersection(b);
+    cout << e_3;
+    cout<<e_2.containsElement(2);
+};
 
