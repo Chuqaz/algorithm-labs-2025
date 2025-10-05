@@ -130,6 +130,109 @@ Class intersection(Class<T> other) {// Метод для определения 
      return true;
  }
  bool operator!=(Class<T> other) { return  !(*this == other); }
+Class operator+(const Class<T> other) {//Сумма множеств
+    size_t result_size = _size;
+    for (int i = 0; i < other._size; i++) {
+        if (!contains(plenty, _size, other.plenty[i])) {
+            result_size++;
+        }
+    }
+    Class result;
+    result._size = result_size;
+    result.plenty = new T[result_size];
+    for (int i = 0; i < _size; i++) {
+        result.plenty[i] = plenty[i];
+    }
+
+    size_t j = _size;
+    for (int i = 0; i < other._size; i++) {
+        if (!contains(plenty, _size, other.plenty[i]))
+            if (j < result_size) {
+                result.plenty[j++] = other.plenty[i];
+            }
+    }
+    return result;
+}
+Class operator-(const Class<T> other) {//Разность множеств
+    int result_size = 0;
+    for (int i = 0; i < _size; i++) {
+        if (!contains(other.plenty, other._size, plenty[i])) {
+            result_size++;
+        }
+    }
+    Class result;
+    result._size = result_size;
+    result.plenty = new T[result_size];
+    int j = 0;
+    for (int i = 0; i < _size; i++) {
+        if (!contains(other.plenty, other._size, plenty[i])) {
+            if (j < result_size) {
+                result.plenty[j++] = plenty[i];
+            }
+        }
+    }
+    return result;
+}
+Class operator+(T number) {//Операторы прибавления числа к множеству
+    if (contains(plenty, _size, number)) {
+        return *this;
+    }
+    Class result;
+    result.plenty = new T[_size + 1];
+    result._size = _size + 1;
+    for (int i = 0; i < _size; i++) {
+        result.plenty[i] = plenty[i];
+    }
+    result.plenty[_size] = number;
+    return result;
+}
+void operator+=(T number) {
+    if (contains(plenty, _size, number)) {
+        return;
+    }
+    T* new_plenty = new T[_size + 1];
+    for (int i = 0; i < _size; i++) {
+        new_plenty[i] = plenty[i];
+    }
+    new_plenty[_size] = number;
+    delete[] plenty;
+    plenty = new_plenty;
+    _size++;
+}
+Class operator-(T number) {//Операторы вычитания числа из множества
+    if (!contains(plenty, _size, number)) {
+        return *this;
+    }
+    Class result;
+    result.plenty = new T[_size - 1];
+    result._size = _size - 1;
+    int j = 0;
+    for (int i = 0; i < _size; i++) {
+        if (!equal(plenty[i],number)) {
+            if (j < result._size) {
+                result.plenty[j++] = plenty[i];
+            }
+        }
+    }
+    return result;
+}
+void operator-=(T number) {
+    if (!contains(plenty, _size, number)) {
+        return;
+    }
+    T* new_plenty = new T[_size - 1];
+    int j = 0;
+    for (int i = 0; i < _size; i++) {
+        if (!equal(plenty[i], number)) {
+            new_plenty[j++] = plenty[i];
+        }
+    }
+    delete[] plenty;
+    plenty = new_plenty;
+    _size--;
+}
+
 };
+
 
 
